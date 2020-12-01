@@ -1,5 +1,5 @@
 <x-master>
-    <main class="sm:container sm:mx-auto sm:mt-10">
+    <main class=" h-screen">
         <app></app>
     </main>
 </x-master>
