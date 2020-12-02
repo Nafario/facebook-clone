@@ -1,7 +1,7 @@
 <template>
   <header class="h-15 bg-white flex items-center px-4 shadow">
     <div class="w-1/4">
-      <div class="flex space-x-2">
+      <div class="flex space-x-2" v-if="user.data">
         <router-link to="/">
           <svg
             class="fill-current w-11 h-11"
@@ -53,7 +53,7 @@
         </div>
       </router-link>
       <router-link
-        to="/"
+        :to="'/users/' + user.data.user_id"
         class="px-6 h-full border-b-2 border-transparent flex items-center"
       >
         <img
@@ -94,7 +94,26 @@
 </template>
 
 <script>
-export default {}
+import Axios from 'axios'
+export default {
+  data() {
+    return {
+      user: {data:[]}
+    }
+  },
+  mounted() {
+    Axios.get('/api/auth-user')
+        .then((res) => {
+          this.user = res.data
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+
+        })
+  },
+}
 </script>
 
 <style></style>

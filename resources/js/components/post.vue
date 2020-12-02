@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded shadow w-2/3 mt-4 overflow-hidden">
+  <div class="bg-white rounded shadow w-2/3 mt-6 overflow-hidden">
     <div class="flex flex-col p-4">
       <div class="flex items-center">
         <div>
@@ -10,19 +10,23 @@
           />
         </div>
         <div class="ml-4">
-          <div class="text-sm font-bold">Name User</div>
-          <div class="text-xs text-gray-500">12 mins</div>
+          <div class="text-sm font-bold">
+            {{ post.data.attributes.posted_by.data.attributes.name }}
+          </div>
+          <div class="text-xs text-gray-500">
+            {{ post.data.attributes.posted_at }}
+          </div>
         </div>
       </div>
       <div class="my-4">
-        <p>Not having fun at all.</p>
+        <p>{{ post.data.attributes.body }}</p>
       </div>
     </div>
     <!-- post image -->
-    <div class="w-full">
+    <div v-if="post.data.attributes.image" class="w-full">
       <img
         class="w-full"
-        src="https://static.photocdn.pt/images/articles/2019/02/07/Simple_Landscape_Photography_Tips_With_Tons_of_Impact.jpg"
+        :src="post.data.attributes.image"
         alt="post images"
       />
     </div>
@@ -54,7 +58,9 @@ export default {
   components: {
     likeComp,
     commentComp
-  }
+  },
+  props: ['post']
+
 }
 </script>
 

@@ -3,7 +3,6 @@
     <app-nav></app-nav>
     <div class="flex overflow-y-hidden flex-1">
       <app-sidebar></app-sidebar>
-
       <div class="w-3/5 overflow-y-scroll hide-scroll-bar px-4">
         <router-view></router-view>
       </div>
