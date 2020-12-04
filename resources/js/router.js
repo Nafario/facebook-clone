@@ -9,10 +9,10 @@ export default new VueRouter({
 
     routes: [
         {
-            path: '/', component: newsFeed, name:'home'
+            path: '/', component: newsFeed, name:'home', meta: {title: 'NewsFeed'}
         },
         {
-            path: '/users/:id', component: userShow , name:'user.show'
+            path: '/users/:id', component: userShow , name:'user.show', meta: {title: 'Profile'}
         }
     ]
 })

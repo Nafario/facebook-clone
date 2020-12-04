@@ -19,8 +19,19 @@ import appSidebar from './sidebar.vue';
         components: {
             appNav,
             appSidebar
+        },
+        created() {
+          this.$store.dispatch('setPageTitle', this.$route.meta.title)
+          
+        },
+      mounted() {
+        this.$store.dispatch('fetchAuthUser')
+      },
+      watch: {
+        $route(to){
+          this.$store.dispatch('setPageTitle', to.meta.title)
         }
-        
+      }
     }
 </script>
 <style scoped>

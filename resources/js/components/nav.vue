@@ -1,7 +1,7 @@
 <template>
   <header class="h-15 bg-white flex items-center px-4 shadow">
     <div class="w-1/4">
-      <div class="flex space-x-2" v-if="user.data">
+      <div class="flex space-x-2" v-if="authUser.data">
         <router-link to="/">
           <svg
             class="fill-current w-11 h-11"
@@ -53,7 +53,7 @@
         </div>
       </router-link>
       <router-link
-        :to="'/users/' + user.data.user_id"
+        :to="'/users/' + authUser.data.user_id"
         class="px-6 h-full border-b-2 border-transparent flex items-center"
       >
         <img
@@ -94,25 +94,16 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import { mapGetters } from 'vuex';
 export default {
-  data() {
-    return {
-      user: {data:[]}
-    }
+  computed: {
+    ...mapGetters([
+      'authUser'
+    ])
   },
   mounted() {
-    Axios.get('/api/auth-user')
-        .then((res) => {
-          this.user = res.data
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-
-        })
-  },
+        this.$store.dispatch('fetchAuthUser')
+      }
 }
 </script>
 

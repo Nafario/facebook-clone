@@ -12,7 +12,7 @@
 <script>
 import axios from 'axios'
 import newPost from '../components/newPost'
-import Post from '../components/Post'
+import Post from '../components/post'
 export default {
   data() {
     return {
