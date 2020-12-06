@@ -23,7 +23,72 @@
         </div>
       </div>
     </div>
+    <div
+      class="w-2/3 flex justify-between bg-white rounded shadow py-3 px-4 mt-2"
+    >
+      <div></div>
+      <div class="">
+        <button
+          v-if="friendButtonText && friendButtonText !== 'Accept'"
+          class="py-1 px-3 bg-gray-400 rounded"
+          @click="$store.dispatch('sendFriendRequest', $route.params.userId)"
+        >
+          {{ friendButtonText }}
+        </button>
+        <button
+          v-if="friendButtonText && friendButtonText === 'Accept'"
+          class="mr-2 py-1 px-3 bg-blue-500 rounded"
+          @click="$store.dispatch('acceptFriendRequest', $route.params.userId)"
+        >
+          Accept
+        </button>
+        <button
+          v-if="friendButtonText && friendButtonText === 'Accept'"
+          class="py-1 px-3 bg-gray-400 rounded"
+          @click="$store.dispatch('ignoreFriendRequest', $route.params.userId)"
+        >
+          Ignore
+        </button>
+        <!-- jjjjjjjjjjjjjjjjjjjjjjjjj -->
+        <button
+          v-if="friendButtonText && friendButtonText !== 'Accept'"
+          @click="$store.dispatch('sendFriendRequest', $route.params.id)"
+          class="py-2 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            class="fill-current w-5 h-5 mr-2 -mt-1"
+          >
+            <path
+              d="M2 6H0v2h2v2h2V8h2V6H4V4H2v2zm7 0a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0V6zm11 9.14A15.93 15.93 0 0 0 12 13c-2.91 0-5.65.78-8 2.14V18h16v-2.86z"
+            />
+          </svg>
+          {{ friendButtonText }}
+        </button>
+        <div class="flex items-center">
+          <!-- acceptFriendRequest -->
+          <button
+            v-if="friendButtonText && friendButtonText === 'Accept'"
+            @click="$store.dispatch('acceptFriendRequest', $route.params.id)"
+            class="py-1 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none"
+          >
+            Accept
+          </button>
+          <!-- ignoreFriendRequest -->
+          <button
+            v-if="friendButtonText && friendButtonText === 'Accept'"
+            @click="$store.dispatch('ignoreFriendRequest', $route.params.id)"
+            class="py-1 text-lg font-medium px-4 text-black ml-2 bg-gray-300 rounded flex items-center justify-center focus:outline-none"
+          >
+            Ignore
+          </button>
+        </div>
+      </div>
+    </div>
+    <p v-if="posts.length < 1">No posts yet!</p>
     <post
+      v-else
       v-for="post in posts.data"
       :key="post.data.post_id"
       :post="post"
@@ -33,6 +98,7 @@
 
 <script>
 import Post from '../../components/post';
+import { mapGetters } from 'vuex';
 import Axios from 'axios'
 export default {
     name:'show',
@@ -41,33 +107,30 @@ export default {
     },
     data() {
         return {
-            user: {},
             posts:[],
-            userLoading: true
+            userLoading: false
         }
     },
     mounted() {
-        Axios.get('/api/users/' + this.$route.params.id)
-            .then(res => {
-                this.user = res.data
+        this.$store.dispatch('fetchUser', this.$route.params.id)
+        Axios.get('/api/users/' + this.$route.params.id + '/posts')
+            .then((res) => {
+                this.posts = res.data
+                this.userLoading = true
+
             })
-            .catch(err => {
-                console.log('unable to fetch user');
+            .catch((err) => {
+                console.log('unable to fetch posts')
             })
             .finally(() => {
-                this.userLoading = false
             })
-            Axios.get('/api/users/' + this.$route.params.id + '/posts')
-                .then((res) => {
-                    this.posts = res.data
-                })
-                .catch((err) => {
-                    console.log('unable to fetch posts')
-                })
-                .finally(() => {
-                    this.loading = false
-                })
-    },
+  },
+  computed: {
+    ...mapGetters({
+      user: 'user',
+      friendButtonText: 'friendButtonText'
+    })
+  }
 }
 </script>
 

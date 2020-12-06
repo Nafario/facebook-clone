@@ -25,7 +25,7 @@
             </svg>
           </div>
           <input
-            class="bg-gray-100 w-64 focus:outline-none rounded-full focus:shadow text-base pl-9 h-9 placeholder-gray-500"
+            class="bg-gray-200 w-64 focus:outline-none rounded-full focus:shadow text-base pl-9 h-9 placeholder-gray-500"
             type="text"
             name="search"
             id="search"
