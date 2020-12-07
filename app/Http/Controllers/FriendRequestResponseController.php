@@ -8,20 +8,16 @@ use App\Http\Resources\Friend as ResourcesFriend;
 use App\Models\Friend;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class FriendRequestResponseController extends Controller
 {
     public function store()
     {
-        try {
-            $data = request()->validate([
-                'user_id' => ['required'],
-                'status' => ['required'],
-            ]);
-        } catch (ValidationException $th) {
-            throw new ValidationErrorException(json_encode($th->errors()));
-        }
+        $data = request()->validate([
+            'user_id' => ['required'],
+            'status' => ['required'],
+        ]);
+
         try {
             $friendRequest = Friend::where('user_id', $data['user_id'])
                 ->where('friend_id', auth()->user()->id)
@@ -38,13 +34,9 @@ class FriendRequestResponseController extends Controller
     }
     public function destroy()
     {
-        try {
-            $data = request()->validate([
-                'user_id' => ['required'],
-            ]);
-        } catch (ValidationException $th) {
-            throw new ValidationErrorException(json_encode($th->errors()));
-        }
+        $data = request()->validate([
+            'user_id' => ['required'],
+        ]);
 
         try {
             Friend::where('user_id', $data['user_id'])

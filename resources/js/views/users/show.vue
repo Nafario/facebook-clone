@@ -16,7 +16,7 @@
             alt="profile"
           />
         </div>
-        <div v-if="user.data">
+        <div>
           <p class="text-4xl font-bold text-center">
             {{ user.data.attributes.name }}
           </p>
@@ -28,27 +28,6 @@
     >
       <div></div>
       <div class="">
-        <button
-          v-if="friendButtonText && friendButtonText !== 'Accept'"
-          class="py-1 px-3 bg-gray-400 rounded"
-          @click="$store.dispatch('sendFriendRequest', $route.params.userId)"
-        >
-          {{ friendButtonText }}
-        </button>
-        <button
-          v-if="friendButtonText && friendButtonText === 'Accept'"
-          class="mr-2 py-1 px-3 bg-blue-500 rounded"
-          @click="$store.dispatch('acceptFriendRequest', $route.params.userId)"
-        >
-          Accept
-        </button>
-        <button
-          v-if="friendButtonText && friendButtonText === 'Accept'"
-          class="py-1 px-3 bg-gray-400 rounded"
-          @click="$store.dispatch('ignoreFriendRequest', $route.params.userId)"
-        >
-          Ignore
-        </button>
         <!-- jjjjjjjjjjjjjjjjjjjjjjjjj -->
         <button
           v-if="friendButtonText && friendButtonText !== 'Accept'"
@@ -86,7 +65,7 @@
         </div>
       </div>
     </div>
-    <p v-if="posts.length < 1">No posts yet!</p>
+    <div v-if="!posts">No posts yet!</div>
     <post
       v-else
       v-for="post in posts.data"
@@ -105,29 +84,15 @@ export default {
     components: {
         Post
     },
-    data() {
-        return {
-            posts:[],
-            userLoading: false
-        }
-    },
+
     mounted() {
         this.$store.dispatch('fetchUser', this.$route.params.id)
-        Axios.get('/api/users/' + this.$route.params.id + '/posts')
-            .then((res) => {
-                this.posts = res.data
-                this.userLoading = true
-
-            })
-            .catch((err) => {
-                console.log('unable to fetch posts')
-            })
-            .finally(() => {
-            })
+        this.$store.dispatch('fetchUserPosts', this.$route.params.id)
   },
   computed: {
     ...mapGetters({
       user: 'user',
+      posts: 'posts',
       friendButtonText: 'friendButtonText'
     })
   }
