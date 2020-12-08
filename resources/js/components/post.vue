@@ -24,25 +24,45 @@
     </div>
     <!-- post image -->
     <div v-if="post.data.attributes.image" class="w-full">
-      <img
-        class="w-full"
-        :src="post.data.attributes.image"
-        alt="post images"
-      />
+      <img class="w-full" :src="post.data.attributes.image" alt="post images" />
     </div>
     <!-- like and comment count -->
-    <div class="flex justify-between px-4 my-4">
-      <like-comp class="flex items-center text-blue-500"
-        >jane and 60 others</like-comp
+    <div
+      class="flex justify-between px-4 my-4"
+      :class="[
+        post.data.attributes.likes.user_likes_post
+          ? 'text-blue-500'
+          : 'text-black',
+      ]"
+    >
+      <like-comp class="flex items-center"
+        >{{ post.data.attributes.likes.like_count }} likes</like-comp
       >
-      <comment-comp class="flex items-center">124 comments</comment-comp>
+      <comment-comp class="flex items-center text-gray-700"
+        >124 comments</comment-comp
+      >
     </div>
     <!-- like and comment -->
     <div class="flex justify-around m-4 text-gray-700">
-      <button class="w-full h-full hover:bg-gray-200 py-2 rounded-sm">
+      <button
+        class="w-full h-full hover:bg-gray-200 py-2 rounded-sm focus:outline-none"
+        :class="[
+          post.data.attributes.likes.user_likes_post
+            ? 'text-blue-500'
+            : 'text-black',
+        ]"
+        @click="
+          $store.dispatch('likePost', {
+            postId: post.data.post_id,
+            postKey: $vnode.key,
+          })
+        "
+      >
         <like-comp class="flex justify-center items-center">Like</like-comp>
       </button>
-      <button class="w-full h-full py-2 hover:bg-gray-200 rounded">
+      <button
+        class="w-full h-full py-2 hover:bg-gray-200 rounded focus:outline-none"
+      >
         <comment-comp class="flex justify-center items-center"
           >Comment
         </comment-comp>

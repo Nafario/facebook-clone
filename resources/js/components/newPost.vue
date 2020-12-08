@@ -11,6 +11,7 @@
     </div>
     <div class="flex-1 mx-4">
       <input
+        v-model="postMessage"
         class="bg-gray-100 w-full focus:outline-none rounded-lg focus:shadow pl-3 text-base h-9 placeholder-gray-500"
         type="text"
         name="body"
@@ -18,6 +19,15 @@
         placeholder="What's on your mind"
       />
     </div>
+    <transition name="fade">
+      <button
+        v-if="postMessage"
+        @click="$store.dispatch('postMessage')"
+        class="py-1 font-semibold mr-4 px-2 rounded bg-blue-500 text-white focus:outline-none"
+      >
+        Post
+      </button>
+    </transition>
     <div>
       <button class="p-3 bg-gray-200 rounded-full">
         <svg
@@ -35,10 +45,29 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
-
+  computed: {
+    postMessage: {
+      get() {
+          return this.$store.getters.postMessage;
+      },
+      set: _.debounce(function (postMessage) {
+            this.$store.commit('updateMessage', postMessage);
+        }, 500),
+     },
+  }
 }
 </script>
 
-<style>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  transition: linear;
+  opacity: 0;
+}
 </style>

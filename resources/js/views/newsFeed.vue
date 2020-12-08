@@ -1,9 +1,12 @@
 <template>
   <div class="flex flex-col items-center py-4">
     <new-post></new-post>
+
+    <div v-if="newsStatus.postsStatus === 'loding'">Loading posts........</div>
     <post
-      v-for="post in posts.data"
-      :key="post.data.post_id"
+      v-else
+      v-for="(post, postKey) in posts.data"
+      :key="postKey"
       :post="post"
     ></post>
   </div>
@@ -13,26 +16,21 @@
 import axios from 'axios'
 import newPost from '../components/newPost'
 import Post from '../components/post'
+import { mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      posts: [],
-      loading: true
-    }
-  },
+
   components: {
     newPost,
     Post,
   },
+  computed: {
+    ...mapGetters({
+      posts: 'posts',
+      newsStatus: 'newsStatus'
+    })
+  },
   mounted() {
-    axios
-      .get('/api/posts')
-      .then((res) => {
-        this.posts = res.data
-      })
-      .catch((err) => {
-        console.log('unable to fetch posts')
-      })
+    this.$store.dispatch('fetchNewsPosts')
   },
 }
 </script>
