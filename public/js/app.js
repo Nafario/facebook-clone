@@ -2235,12 +2235,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     likeComp: _posts_like__WEBPACK_IMPORTED_MODULE_0__["default"],
     commentComp: _posts_comment__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      comments: false,
+      commentBody: ''
+    };
   },
   props: ['post']
 });
@@ -21213,7 +21279,12 @@ var render = function() {
           _c(
             "comment-comp",
             { staticClass: "flex items-center text-gray-700" },
-            [_vm._v("124 comments")]
+            [
+              _vm._v(
+                _vm._s(_vm.post.data.attributes.comments.comment_count) +
+                  "\n      comments"
+              )
+            ]
           )
         ],
         1
@@ -21253,7 +21324,12 @@ var render = function() {
           "button",
           {
             staticClass:
-              "w-full h-full py-2 hover:bg-gray-200 rounded focus:outline-none"
+              "w-full h-full py-2 hover:bg-gray-200 rounded focus:outline-none",
+            on: {
+              click: function($event) {
+                _vm.comments = !_vm.comments
+              }
+            }
           },
           [
             _c(
@@ -21264,7 +21340,127 @@ var render = function() {
           ],
           1
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.comments
+        ? _c(
+            "div",
+            { staticClass: "border-t pt-4" },
+            [
+              _vm._l(_vm.post.data.attributes.comments.data, function(
+                comment,
+                i
+              ) {
+                return _c(
+                  "div",
+                  { key: i, staticClass: "flex my-4 items-center px-4" },
+                  [
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-2 flex-1" }, [
+                      _c(
+                        "div",
+                        { staticClass: "bg-gray-100 rounded-lg p-2 text-sm" },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "font-bold text-blue-500",
+                              attrs: {
+                                href:
+                                  "/users/" +
+                                  comment.data.attributes.commented_by.data
+                                    .user_id
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(
+                                    comment.data.attributes.commented_by.data
+                                      .attributes.name
+                                  ) +
+                                  "\n          "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "inline" }, [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(comment.data.attributes.body) +
+                                "\n          "
+                            )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-xs pl-1 text-gray-500" }, [
+                        _c("p", [
+                          _vm._v(_vm._s(comment.data.attributes.commented_at))
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex items-center px-3 py-2 border-t" },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.commentBody,
+                        expression: "commentBody"
+                      }
+                    ],
+                    staticClass:
+                      "bg-gray-100 w-full focus:outline-none rounded-md pl-3 text-base h-9 placeholder-gray-500",
+                    attrs: {
+                      type: "text",
+                      name: "body",
+                      id: "body",
+                      placeholder: "Write a comment !"
+                    },
+                    domProps: { value: _vm.commentBody },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.commentBody = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "py-1 font-semibold ml-4 px-2 rounded bg-gray-100 text-gray-500 focus:outline-none",
+                      on: {
+                        click: function($event) {
+                          _vm.$store.dispatch("commentPost", {
+                            body: _vm.commentBody,
+                            postId: _vm.post.data.post_id,
+                            postKey: _vm.$vnode.key
+                          })
+                          _vm.commentBody = ""
+                        }
+                      }
+                    },
+                    [_vm._v("\n        Post\n      ")]
+                  )
+                ]
+              )
+            ],
+            2
+          )
+        : _vm._e()
     ]
   )
 }
@@ -21279,6 +21475,20 @@ var staticRenderFns = [
         attrs: {
           src: __webpack_require__(/*! ../../../public/imgs/profile.jpg */ "./public/imgs/profile.jpg"),
           alt: "profile"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c("img", {
+        staticClass: "object-cover rounded-full w-10 -mt-4",
+        attrs: {
+          src: __webpack_require__(/*! ../../../public/imgs/profile.jpg */ "./public/imgs/profile.jpg"),
+          alt: "profile image for user"
         }
       })
     ])
@@ -21322,7 +21532,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("p", { staticClass: "ml-1 text-gray-700" }, [_vm._t("default")], 2)
+    _c("p", { staticClass: "ml-1 text-gray-700 -mt-1" }, [_vm._t("default")], 2)
   ])
 }
 var staticRenderFns = []
@@ -21431,20 +21641,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "flex flex-col items-center py-4" },
-    [
-      _c("new-post"),
-      _vm._v(" "),
-      _vm.newsStatus.postsStatus === "loding"
-        ? _c("div", [_vm._v("Loading posts........")])
-        : _vm._l(_vm.posts.data, function(post, postKey) {
-            return _c("post", { key: postKey, attrs: { post: post } })
-          })
-    ],
-    2
-  )
+  return _vm.posts
+    ? _c(
+        "div",
+        { staticClass: "flex flex-col items-center py-4" },
+        [
+          _c("new-post"),
+          _vm._v(" "),
+          _vm.newsStatus.postsStatus === "loding"
+            ? _c("div", [_vm._v("Loading posts........")])
+            : _vm._l(_vm.posts.data, function(post, postKey) {
+                return _c("post", { key: postKey, attrs: { post: post } })
+              })
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -21468,130 +21680,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "flex flex-col items-center w-full" },
-    [
-      _c("div", [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex flex-col items-center -mt-40" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", [
-            _c("p", { staticClass: "text-4xl font-bold text-center" }, [
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.user.data.attributes.name) +
-                  "\n        "
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
+  return _vm.user
+    ? _c(
         "div",
-        {
-          staticClass:
-            "w-2/3 flex justify-between bg-white rounded shadow py-3 px-4 mt-2"
-        },
+        { staticClass: "flex flex-col items-center w-full" },
         [
-          _c("div"),
+          _c("div", [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex flex-col items-center -mt-40" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", [
+                _c("p", { staticClass: "text-4xl font-bold text-center" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.user.data.attributes.name) +
+                      "\n        "
+                  )
+                ])
+              ])
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", {}, [
-            _vm.friendButtonText && _vm.friendButtonText !== "Accept"
-              ? _c(
-                  "button",
-                  {
-                    staticClass:
-                      "py-2 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none",
-                    on: {
-                      click: function($event) {
-                        return _vm.$store.dispatch(
-                          "sendFriendRequest",
-                          _vm.$route.params.id
-                        )
-                      }
-                    }
-                  },
-                  [
-                    _c(
-                      "svg",
+          _c(
+            "div",
+            {
+              staticClass:
+                "w-2/3 flex justify-between bg-white rounded shadow py-3 px-4 mt-2"
+            },
+            [
+              _c("div"),
+              _vm._v(" "),
+              _c("div", {}, [
+                _vm.friendButtonText && _vm.friendButtonText !== "Accept"
+                  ? _c(
+                      "button",
                       {
-                        staticClass: "fill-current w-5 h-5 mr-2 -mt-1",
-                        attrs: {
-                          xmlns: "http://www.w3.org/2000/svg",
-                          viewBox: "0 0 20 20"
+                        staticClass:
+                          "py-2 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none",
+                        on: {
+                          click: function($event) {
+                            return _vm.$store.dispatch(
+                              "sendFriendRequest",
+                              _vm.$route.params.id
+                            )
+                          }
                         }
                       },
                       [
-                        _c("path", {
-                          attrs: {
-                            d:
-                              "M2 6H0v2h2v2h2V8h2V6H4V4H2v2zm7 0a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0V6zm11 9.14A15.93 15.93 0 0 0 12 13c-2.91 0-5.65.78-8 2.14V18h16v-2.86z"
-                          }
-                        })
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "fill-current w-5 h-5 mr-2 -mt-1",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              viewBox: "0 0 20 20"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M2 6H0v2h2v2h2V8h2V6H4V4H2v2zm7 0a3 3 0 0 1 6 0v2a3 3 0 0 1-6 0V6zm11 9.14A15.93 15.93 0 0 0 12 13c-2.91 0-5.65.78-8 2.14V18h16v-2.86z"
+                              }
+                            })
+                          ]
+                        ),
+                        _vm._v(
+                          "\n        " +
+                            _vm._s(_vm.friendButtonText) +
+                            "\n      "
+                        )
                       ]
-                    ),
-                    _vm._v(
-                      "\n        " + _vm._s(_vm.friendButtonText) + "\n      "
                     )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex items-center" }, [
-              _vm.friendButtonText && _vm.friendButtonText === "Accept"
-                ? _c(
-                    "button",
-                    {
-                      staticClass:
-                        "py-1 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none",
-                      on: {
-                        click: function($event) {
-                          return _vm.$store.dispatch(
-                            "acceptFriendRequest",
-                            _vm.$route.params.id
-                          )
-                        }
-                      }
-                    },
-                    [_vm._v("\n          Accept\n        ")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.friendButtonText && _vm.friendButtonText === "Accept"
-                ? _c(
-                    "button",
-                    {
-                      staticClass:
-                        "py-1 text-lg font-medium px-4 text-black ml-2 bg-gray-300 rounded flex items-center justify-center focus:outline-none",
-                      on: {
-                        click: function($event) {
-                          return _vm.$store.dispatch(
-                            "ignoreFriendRequest",
-                            _vm.$route.params.id
-                          )
-                        }
-                      }
-                    },
-                    [_vm._v("\n          Ignore\n        ")]
-                  )
-                : _vm._e()
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      !_vm.posts
-        ? _c("div", [_vm._v("No posts yet!")])
-        : _vm._l(_vm.posts.data, function(post) {
-            return _c("post", { key: post.data.post_id, attrs: { post: post } })
-          })
-    ],
-    2
-  )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex items-center" }, [
+                  _vm.friendButtonText && _vm.friendButtonText === "Accept"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "py-1 text-lg font-medium px-4 bg-blue-500 text-white rounded flex items-center justify-center focus:outline-none",
+                          on: {
+                            click: function($event) {
+                              return _vm.$store.dispatch(
+                                "acceptFriendRequest",
+                                _vm.$route.params.id
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("\n          Accept\n        ")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.friendButtonText && _vm.friendButtonText === "Accept"
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "py-1 text-lg font-medium px-4 text-black ml-2 bg-gray-300 rounded flex items-center justify-center focus:outline-none",
+                          on: {
+                            click: function($event) {
+                              return _vm.$store.dispatch(
+                                "ignoreFriendRequest",
+                                _vm.$route.params.id
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("\n          Ignore\n        ")]
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          !_vm.posts
+            ? _c("div", [_vm._v("No posts yet!")])
+            : _vm._l(_vm.posts.data, function(post, postKey) {
+                return _c("post", { key: postKey, attrs: { post: post } })
+              })
+        ],
+        2
+      )
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {
@@ -38891,19 +39107,12 @@ var mutations = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  user: {
-    data: []
-  },
-  userStatus: null,
-  posts: null,
-  postsStatus: null
+  user: null,
+  userStatus: null
 };
 var getters = {
   user: function user(state) {
     return state.user;
-  },
-  posts: function posts(state) {
-    return state.posts;
   },
   status: function status(state) {
     return {
@@ -38930,30 +39139,19 @@ var getters = {
 };
 var actions = {
   fetchUser: function fetchUser(_ref, userId) {
-    var commit = _ref.commit;
+    var commit = _ref.commit,
+        dispatch = _ref.dispatch;
     commit('setUserStatus', 'loading');
     axios.get('/api/users/' + userId).then(function (res) {
       commit('setUser', res.data);
       commit('setUserStatus', 'success');
     })["catch"](function (error) {
       commit('setUserStatus', 'error');
-      console.log(error);
     });
   },
-  fetchUserPosts: function fetchUserPosts(_ref2, userId) {
-    var commit = _ref2.commit;
-    commit('setPostsStatus', 'loading');
-    axios.get('/api/users/' + userId + '/posts').then(function (res) {
-      commit('setPosts', res.data);
-      commit('setPostsStatus', 'success');
-    })["catch"](function (error) {
-      commit('setPostsStatus', 'error');
-      console.log(error);
-    });
-  },
-  sendFriendRequest: function sendFriendRequest(_ref3, friendId) {
-    var commit = _ref3.commit,
-        getters = _ref3.getters;
+  sendFriendRequest: function sendFriendRequest(_ref2, friendId) {
+    var commit = _ref2.commit,
+        getters = _ref2.getters;
 
     if (getters.friendButtonText !== 'Add Friend') {
       return;
@@ -38963,32 +39161,28 @@ var actions = {
       friend_id: friendId
     }).then(function (res) {
       commit('setUserFriendship', res.data);
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    })["catch"](function (error) {});
   },
-  acceptFriendRequest: function acceptFriendRequest(_ref4, userId) {
-    var commit = _ref4.commit;
+  acceptFriendRequest: function acceptFriendRequest(_ref3, userId) {
+    var commit = _ref3.commit,
+        state = _ref3.state;
     axios.post('/api/friend-request-response', {
       user_id: userId,
       status: 1
     }).then(function (res) {
       commit('setUserFriendship', res.data);
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    })["catch"](function (error) {});
   },
-  ignoreFriendRequest: function ignoreFriendRequest(_ref5, userId) {
-    var commit = _ref5.commit;
+  ignoreFriendRequest: function ignoreFriendRequest(_ref4, userId) {
+    var commit = _ref4.commit,
+        state = _ref4.state;
     axios["delete"]('/api/friend-request-response/delete', {
       data: {
         user_id: userId
       }
     }).then(function (res) {
       commit('setUserFriendship', null);
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    })["catch"](function (error) {});
   }
 };
 var mutations = {
@@ -39000,12 +39194,6 @@ var mutations = {
   },
   setUserStatus: function setUserStatus(state, status) {
     state.userStatus = status;
-  },
-  setPosts: function setPosts(state, posts) {
-    state.posts = posts;
-  },
-  setPostsStatus: function setPostsStatus(state, status) {
-    state.postsStatus = status;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

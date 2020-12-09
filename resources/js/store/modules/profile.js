@@ -1,16 +1,11 @@
 const state = {
-  user: { data: [] },
+  user: null,
   userStatus: null,
-  posts: null,
-  postsStatus: null,
 }
 
 const getters = {
   user: (state) => {
     return state.user
-  },
-  posts: (state) => {
-    return state.posts
   },
   status: (state) => {
     return {
@@ -41,7 +36,7 @@ const getters = {
 }
 
 const actions = {
-  fetchUser({ commit }, userId) {
+  fetchUser({ commit, dispatch }, userId) {
     commit('setUserStatus', 'loading')
 
     axios
@@ -52,21 +47,6 @@ const actions = {
       })
       .catch((error) => {
         commit('setUserStatus', 'error')
-        console.log(error)
-      })
-  },
-  fetchUserPosts({ commit }, userId) {
-    commit('setPostsStatus', 'loading')
-
-    axios
-      .get('/api/users/' + userId + '/posts')
-      .then((res) => {
-        commit('setPosts', res.data)
-        commit('setPostsStatus', 'success')
-      })
-      .catch((error) => {
-        commit('setPostsStatus', 'error')
-        console.log(error)
       })
   },
   sendFriendRequest({ commit, getters }, friendId) {
@@ -79,21 +59,17 @@ const actions = {
       .then((res) => {
         commit('setUserFriendship', res.data)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   },
-  acceptFriendRequest({ commit }, userId) {
+  acceptFriendRequest({ commit, state }, userId) {
     axios
       .post('/api/friend-request-response', { user_id: userId, status: 1 })
       .then((res) => {
         commit('setUserFriendship', res.data)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   },
-  ignoreFriendRequest({ commit }, userId) {
+  ignoreFriendRequest({ commit, state }, userId) {
     axios
       .delete('/api/friend-request-response/delete', {
         data: { user_id: userId },
@@ -101,9 +77,7 @@ const actions = {
       .then((res) => {
         commit('setUserFriendship', null)
       })
-      .catch((error) => {
-        console.log(error)
-      })
+      .catch((error) => {})
   },
 }
 
@@ -116,12 +90,6 @@ const mutations = {
   },
   setUserStatus(state, status) {
     state.userStatus = status
-  },
-  setPosts(state, posts) {
-    state.posts = posts
-  },
-  setPostsStatus(state, status) {
-    state.postsStatus = status
   },
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center py-4">
+  <div class="flex flex-col items-center py-4" v-if="posts">
     <new-post></new-post>
 
     <div v-if="newsStatus.postsStatus === 'loding'">Loading posts........</div>

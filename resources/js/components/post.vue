@@ -39,7 +39,10 @@
         >{{ post.data.attributes.likes.like_count }} likes</like-comp
       >
       <comment-comp class="flex items-center text-gray-700"
-        >124 comments</comment-comp
+        >{{
+          post.data.attributes.comments.comment_count
+        }}
+        comments</comment-comp
       >
     </div>
     <!-- like and comment -->
@@ -62,11 +65,68 @@
       </button>
       <button
         class="w-full h-full py-2 hover:bg-gray-200 rounded focus:outline-none"
+        @click="comments = !comments"
       >
         <comment-comp class="flex justify-center items-center"
           >Comment
         </comment-comp>
       </button>
+    </div>
+    <div v-if="comments" class="border-t pt-4">
+      <div
+        class="flex my-4 items-center px-4"
+        v-for="(comment, i) in post.data.attributes.comments.data"
+        :key="i"
+      >
+        <div class="">
+          <img
+            src="../../../public/imgs/profile.jpg"
+            alt="profile image for user"
+            class="object-cover rounded-full w-10 -mt-4"
+          />
+        </div>
+        <div class="ml-2 flex-1">
+          <div class="bg-gray-100 rounded-lg p-2 text-sm">
+            <a
+              class="font-bold text-blue-500"
+              :href="
+                '/users/' + comment.data.attributes.commented_by.data.user_id
+              "
+            >
+              {{ comment.data.attributes.commented_by.data.attributes.name }}
+            </a>
+            <p class="inline">
+              {{ comment.data.attributes.body }}
+            </p>
+          </div>
+          <div class="text-xs pl-1 text-gray-500">
+            <p>{{ comment.data.attributes.commented_at }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center px-3 py-2 border-t">
+        <input
+          v-model="commentBody"
+          class="bg-gray-100 w-full focus:outline-none rounded-md pl-3 text-base h-9 placeholder-gray-500"
+          type="text"
+          name="body"
+          id="body"
+          placeholder="Write a comment !"
+        />
+        <button
+          class="py-1 font-semibold ml-4 px-2 rounded bg-gray-100 text-gray-500 focus:outline-none"
+          @click="
+            $store.dispatch('commentPost', {
+              body: commentBody,
+              postId: post.data.post_id,
+              postKey: $vnode.key,
+            });
+            commentBody = '';
+          "
+        >
+          Post
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -79,7 +139,14 @@ export default {
     likeComp,
     commentComp
   },
+  data() {
+    return {
+      comments: false,
+      commentBody: ''
+    }
+  },
   props: ['post']
+  
 
 }
 </script>

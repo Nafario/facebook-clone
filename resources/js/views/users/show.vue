@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center w-full">
+  <div class="flex flex-col items-center w-full" v-if="user">
     <div>
       <div class="w-full h-64 overflow-hidden">
         <img
@@ -68,8 +68,8 @@
     <div v-if="!posts">No posts yet!</div>
     <post
       v-else
-      v-for="post in posts.data"
-      :key="post.data.post_id"
+      v-for="(post, postKey) in posts.data"
+      :key="postKey"
       :post="post"
     ></post>
   </div>
