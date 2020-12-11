@@ -26,7 +26,7 @@
       </div>
     </div>
     <!-- post image -->
-    <div v-if="post.data.attributes.image" class="w-full">
+    <div v-if="post.data.attributes.image.length" class="w-full">
       <img class="w-full" :src="post.data.attributes.image" alt="post images" />
     </div>
     <!-- like and comment count -->
@@ -75,7 +75,8 @@
         </comment-comp>
       </button>
     </div>
-    <div v-if="comments" class="border-t pt-4">
+    <div v-if="comments" class="pt-4">
+      <hr />
       <div
         class="flex my-4 items-center px-4"
         v-for="(comment, i) in post.data.attributes.comments.data"

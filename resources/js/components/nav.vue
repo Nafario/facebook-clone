@@ -1,7 +1,7 @@
 <template>
   <header class="h-15 bg-white flex items-center px-4 shadow">
     <div class="w-1/4">
-      <div class="flex space-x-2" v-if="authUser.data">
+      <div class="flex space-x-2" v-if="authUser">
         <router-link to="/">
           <svg
             class="fill-current w-11 h-11"
@@ -35,7 +35,10 @@
       </div>
     </div>
     <!-- navigation -->
-    <div class="w-2/4 flex items-center justify-center h-full">
+    <div
+      class="w-2/4 flex items-center justify-center h-full"
+      v-if="authUser.data.attributes"
+    >
       <router-link
         to="/"
         class="px-6 border-b-2 border-blue-500 h-full flex items-center"

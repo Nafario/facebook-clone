@@ -39,7 +39,7 @@ class UserImagesTest extends TestCase
         Storage::disk('public')->exists('user-images/' . $file->hashName());
         $userImage = UserImage::first();
         $this->assertEquals(
-            'user-images/' . $file->hashName(),
+            'storage/user-images/' . $file->hashName(),
             $userImage->path
         );
         $this->assertEquals('850', $userImage->width);
