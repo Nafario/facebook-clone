@@ -2,18 +2,24 @@
   <div class="flex flex-col items-center w-full" v-if="user">
     <div>
       <div class="w-full h-64 overflow-hidden">
-        <img
-          src="https://static.photocdn.pt/images/articles/2018/02/28/articles/2017_8/iStock-841311310-min.jpg"
-          alt="profile banner"
-          class="w-full object-cover object-center"
+        <uploadable-image
+          imageWidth="1200"
+          imageHeight="300"
+          location="cover"
+          :userImage="user.data.attributes.cover_image"
+          classes="w-full object-cover object-center"
+          altText="profile banner"
         />
       </div>
       <div class="flex flex-col items-center -mt-40">
         <div class="w-48 overflow-hidden">
-          <img
-            class="object-cover rounded-full w-full border-4 border-gray-100 shadow-sm"
-            src="../../../../public/imgs/profile.jpg"
-            alt="profile"
+          <uploadable-image
+            imageWidth="750"
+            imageHeight="750"
+            location="profile"
+            :userImage="user.data.attributes.profile_image"
+            classes="object-cover rounded-full w-full border-4 border-gray-100 shadow-sm"
+            altText="profile photo"
           />
         </div>
         <div>
@@ -79,10 +85,12 @@
 import Post from '../../components/post';
 import { mapGetters } from 'vuex';
 import Axios from 'axios'
+import UploadableImage from '../../components/imageComponent/UploadableImage.vue';
 export default {
     name:'show',
     components: {
-        Post
+        Post,
+        UploadableImage
     },
 
     mounted() {

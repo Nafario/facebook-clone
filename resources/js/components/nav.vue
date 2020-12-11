@@ -58,7 +58,7 @@
       >
         <img
           class="w-8 h-8 object-cover rounded-full"
-          src="../../../public/imgs/profile.jpg"
+          :src="authUser.data.attributes.profile_image.data.attributes.path"
           alt="profile"
         />
       </router-link>

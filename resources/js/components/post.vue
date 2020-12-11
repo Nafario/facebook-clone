@@ -5,7 +5,10 @@
         <div>
           <img
             class="w-10 h-10 object-cover rounded-full"
-            src="../../../public/imgs/profile.jpg"
+            :src="
+              post.data.attributes.posted_by.data.attributes.profile_image.data
+                .attributes.path
+            "
             alt="profile"
           />
         </div>
@@ -80,7 +83,10 @@
       >
         <div class="">
           <img
-            src="../../../public/imgs/profile.jpg"
+            :src="
+              comment.data.attributes.commented_by.data.attributes.profile_image
+                .data.attributes.path
+            "
             alt="profile image for user"
             class="object-cover rounded-full w-10 -mt-4"
           />

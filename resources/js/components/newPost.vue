@@ -5,7 +5,7 @@
     <div>
       <img
         class="w-10 h-10 object-cover rounded-full"
-        src="../../../public/imgs/profile.jpg"
+        :src="authUser.data.attributes.profile_image.data.attributes.path"
         alt="profile"
       />
     </div>
@@ -46,8 +46,13 @@
 
 <script>
 import _ from 'lodash'
+import { mapGetters } from 'vuex';
+
 export default {
   computed: {
+    ...mapGetters([
+      'authUser'
+    ]),
     postMessage: {
       get() {
           return this.$store.getters.postMessage;
